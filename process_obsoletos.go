@@ -105,6 +105,7 @@ mainloop:
 	if err != nil {
 		return "", err
 	}
+	log.Printf("Obsoletos: insertados %d distribuidores en la colección 'obsoletes'", len(catalogs))
 
 	indexModel := mongo.IndexModel{
 		Keys: bson.M{

@@ -122,6 +122,7 @@ func process_cvs_backorders(filename string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	log.Printf("Backorders: insertados %d registros en la colección 'backorders'", len(catalogs))
 
 	indexModel := mongo.IndexModel{
 		Keys: bson.M{

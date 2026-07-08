@@ -60,6 +60,12 @@ func handleRequest(ctx context.Context, req Request) (Response, error) {
 		return Response{OK: false, Error: "no se recibió ningún archivo para procesar"}, nil
 	}
 
+	formato := req.Ctype
+	if formato == "" {
+		formato = "cvs"
+	}
+	log.Printf("Procesando documento tipo=%q formato=%q archivo=%q remitente=%q", doctype, formato, req.S3Key, req.From)
+
 	// Authorization: the sender must be a registered user.
 	if !Validate_email(req.From) {
 		log.Println("Correo no autorizado:", req.From)
@@ -117,10 +123,11 @@ func handleRequest(ctx context.Context, req Request) (Response, error) {
 	}
 
 	if err != nil {
-		log.Println("Error procesando:", err)
+		log.Printf("Error procesando documento tipo=%q: %v", doctype, err)
 		return Response{OK: false, Authorized: true, Error: err.Error()}, nil
 	}
 
+	log.Printf("Documento tipo=%q procesado correctamente", doctype)
 	return Response{OK: true, Authorized: true, Summary: summary}, nil
 }
 

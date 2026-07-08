@@ -43,8 +43,10 @@ func update_date_catalogs(date1 *time.Time, date2 *time.Time, typedoc, brand str
 		return
 	}
 
+	var campo string
 	switch typedoc {
 	case "asp":
+		campo = "PartsUpdate." + brand
 		if brand == "Honda" {
 			if stats.PartsUpdate.Honda.StartDate.Before(*date1) {
 				stats.PartsUpdate.Honda.StartDate = *date1
@@ -58,12 +60,15 @@ func update_date_catalogs(date1 *time.Time, date2 *time.Time, typedoc, brand str
 		}
 	case "obsoletos":
 		stats.ObsoletesUpdate = *date1
+		campo = "ObsoletesUpdate"
 	case "backorders":
 		stats.BackordersUpdate = *date1
+		campo = "BackordersUpdate"
 	case "inventory":
 		stats.InventoryUpdate = *date1
+		campo = "InventoryUpdate"
 	}
 
 	collection.FindOneAndReplace(context.TODO(), filter, stats)
-	log.Println("Updated catalogs")
+	log.Printf("Fecha de última actualización guardada en dbstats.%s (tipo=%q)", campo, typedoc)
 }

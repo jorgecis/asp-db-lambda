@@ -70,6 +70,7 @@ func process_xml_asp(filename string, date1 time.Time, date2 time.Time, brand st
 	if err != nil {
 		return "", err
 	}
+	log.Printf("ASP (excel): insertado catálogo con %d partes marca=%q en la colección 'catalog'", len(catalog.Parts), catalog.Brand)
 	retstr += fmt.Sprintf("Se procesaron %d registros \r\n", len(catalog.Parts))
 	retstr += fmt.Sprintf("Fecha inicial %s \r\n", catalog.Start_date.Format("02/01/2006"))
 	retstr += fmt.Sprintf("Fecha final %s \r\n", catalog.End_date.Format("02/01/2006"))
@@ -124,6 +125,7 @@ func process_cvs_asp(filename string, date1 time.Time, date2 time.Time, brand st
 	if err != nil {
 		return "", err
 	}
+	log.Printf("ASP (csv): insertado catálogo con %d partes marca=%q en la colección 'catalog'", len(catalog.Parts), catalog.Brand)
 	retstr += fmt.Sprintf("Se procesaron %d registros \r\n", len(catalog.Parts))
 	retstr += fmt.Sprintf("Fecha inicial %s \r\n", catalog.Start_date.Format("02/01/2006"))
 	retstr += fmt.Sprintf("Fecha final %s \r\n", catalog.End_date.Format("02/01/2006"))
